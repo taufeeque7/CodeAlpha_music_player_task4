@@ -1,0 +1,221 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Music Player</title>
+		<link rel="stylesheet" href="style.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+			integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"/>
+	</head>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+			font-family: times new roman;
+			box-sizing: border-box;
+		}
+		.container{
+			width: 100%;
+			height: 100vh;
+			background-image: url("C:/Users/DELL/Downloads/powell.jpg");
+			background-size: cover;
+			align-items: center;
+			justify-content: center;
+			display: flex;
+		}
+		.music-player{
+			width: 340px;
+			border-radius:10px;
+			text-align: center;
+			padding: 25px 35px;
+			background: radial-gradient(
+		circle at 74.2% 50.9%,
+		rgb(1, 72, 222) 5.2%,
+		rgb(3, 22, 65) 75.3%
+	);
+		}
+
+		nav{
+			display: flex;
+			color: white;
+			justify-content: space-between;
+			margin-bottom: 30px;
+
+		}
+
+		nav .title{
+			padding-top: 10px;
+		}
+
+		nav .circle {
+			width: 40px;
+			height: 40px;
+			background: #fff;
+			border-radius: 50%;
+			color: green;
+			line-height: 40px;
+			box-shadow: 0 5px 10px rgba(255, 57, 24, 1.0);
+		}
+
+		.song-img {
+	width: 220px;
+	border: 8px solid #fff;
+	border-radius: 50%;
+
+	box-shadow: 0 10px 60px rgba(255, 26, 26, 0.22);
+}
+
+
+		.music-player h2{
+			font-size: 20px;
+			font-weight: 400px;
+			color: white;
+			margin-top: 20px;
+		}
+
+		.music-player p{
+			font-size: 14px;
+			color: white;
+			margin-top: 10px;
+		}
+
+		.controls div{
+			width: 40px;
+			height: 40px;
+			margin: 20px;
+			color: blue;
+			background: white;
+			border-radius: 50%;
+			line-height: 42px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+		}
+
+		
+
+		.controls{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			
+
+		}
+
+		.controls div:nth-child(2) {
+	transform: scale(1.5);
+	background: silver;
+	color: green;
+}
+#progress {
+	-webkit-appearance: none;
+	width: 100%;
+	height: 6px;
+	background: white; 
+	border-radius: 4px;
+	cursor: pointer;
+	margin: 40px 0;
+}
+
+#progress::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 30px;
+	height: 30px;
+	border: 8px solid #fff;
+	background: blue;
+	border-radius: 50%;
+	box-shadow: 0 5px 5px rgba(255, 26, 26, 0.22);
+}
+
+
+
+	</style>
+
+	<body>
+		<div class="container">
+			<div class="music-player">
+				<!--Icon section starts here-->
+				<nav>
+					<div class="circle">
+						<i class="fa-solid fa-heart"></i>
+					</div>
+					<div class="title"><h4>Now Playing</h4></div>
+					<div class="circle">
+						<i class="fa-solid fa-plus"></i>
+					</div>
+				</nav>
+<img src="C:\Users\DELL\Downloads\images.jfif"  alt="" class="song-img"/>
+<h2>Say naat with me</h2>
+<p>Taufeeque Ahmed Rajper</p>
+<audio src="C:\Users\DELL\Downloads\Main madiney chala naatby Awaisi Raza Qadri.mp3" id="naat">
+<source src="" type="mp3"/>
+</audio>
+<input type="range" value="0" id="progress" />
+<div class="controls">
+<div><i class="fa-solid fa-backward"></i></div>
+<div id="play-pause"><i class="fa-solid fa-play" id="action"></i></div>
+<div><i class="fa-solid fa-forward"></i></div>
+</div>
+</div>
+</div>
+<script>
+			let progress = document.getElementById("progress");
+let naat = document.getElementById("naat");
+let playPause = document.getElementById("play-pause");
+let actionIcon = document.getElementById("action");
+
+naat.addEventListener("loadedmetadata", () => {
+	progress.max = naat.duration;
+	progress.value = naat.currentTime;
+});
+
+playPause.addEventListener("click", () => {
+	if (actionIcon.classList.contains("fa-play")) {
+		naat.play();
+		actionIcon.classList.remove("fa-play");
+		actionIcon.classList.add("fa-pause");
+	} else {
+		naat.pause();
+		actionIcon.classList.remove("fa-pause");
+		actionIcon.classList.add("fa-play");
+	}
+});
+
+// if (song.play()) {
+// 	setInterval(() => {
+// 		progress.value = song.currentTime;
+// 	}, 500);
+// }
+naat.onplaying = function () {
+	setInterval(() => {
+		progress.value = naat.currentTime;
+	}, 500);
+};
+progress.addEventListener("change", () => {
+	naat.play();
+	naat.currentTime = progress.value;
+	actionIcon.classList.add("fa-pause");
+	actionIcon.classList.remove("fa-play");
+});
+
+// progress.onchange = function () {
+// 	song.play();
+// 	song.currentTime = progress.value;
+// 	ctrlIcon.classList.add("fa-pause");
+// 	ctrlIcon.classList.remove("fa-play");
+// };
+
+		</script>
+
+
+		
+	</body>
+</html>
